@@ -190,8 +190,9 @@ class GA(fitness):
                     pb[i] = np.copy(self.pop[i])
                     pb_fit[i] = self.fits[i]
             best_idx = np.argmax(pb_fit)
-            self.best = np.copy(pb[best_idx])
-            self.best_fit = pb_fit[best_idx]
+            if self.best_fit < pb_fit[best_idx]:
+                self.best = np.copy(pb[best_idx])
+                self.best_fit = pb_fit[best_idx]
 
         return 1 / self.best_fit
 
@@ -243,8 +244,9 @@ class DE(fitness):
             self.pop[off_fits > self.fits[i]] = offs[off_fits > self.fits[i]]
             self.fits[off_fits > self.fits[i]] = off_fits[off_fits > self.fits[i]]
             best_idx = np.argmax(self.fits)
-            self.best = self.pop[best_idx]
-            self.best_fit = self.fits[best_idx]
+            if self.best_fit < self.fits[best_idx]:
+                self.best = self.pop[best_idx]
+                self.best_fit = self.fits[best_idx]
 
         return 1 / self.best_fit
 

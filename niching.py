@@ -103,7 +103,7 @@ class nichingswarm(fitness):
                 self.group[self.num_group][i] = True
                 self.num_group = self.num_group + 1
 
-    def nPSO_org(self, grouping=None):
+    def nPSO(self, grouping=None):
         if grouping is None:
             grouping = self.grouping
         self.pop = np.random.randint(self.low, self.high, size=(self.num_pop, self.dim))
@@ -143,13 +143,7 @@ class nichingswarm(fitness):
                     self.pb[i] = np.copy(self.pop[i])
                     self.pb_fit[i] = self.fits[i]
             best_idx = np.argmax(self.pb_fit)
-            self.gb = np.copy(self.pb[best_idx])
-            self.gb_fit = self.pb_fit[best_idx]
+            if self.gb_fit < self.pb_fit[best_idx]:
+                self.gb = np.copy(self.pb[best_idx])
+                self.gb_fit = self.pb_fit[best_idx]
         return 1 / self.gb_fit
-
-    def nPSO(self):
-        return self.nPSO_org()
-
-    def nPSO_cluster(self):
-        self.num_group = 5
-        return self.nPSO_org(self.clustering)

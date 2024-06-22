@@ -1,5 +1,5 @@
 import numpy as np
-
+from math import sqrt
 
 class fitness:
     def __init__(self, srv_rate, req_rate, cloud_delay=0.1):

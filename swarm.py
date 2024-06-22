@@ -59,8 +59,9 @@ class PSO(fitness):
                     self.pb[i] = np.copy(self.pop[i])
                     self.pb_fit[i] = self.fits[i]
             best_idx = np.argmax(self.pb_fit)
-            self.gb = np.copy(self.pb[best_idx])
-            self.gb_fit = self.pb_fit[best_idx]
+            if self.gb_fit < self.pb_fit[best_idx]:
+                self.gb = np.copy(self.pb[best_idx])
+                self.gb_fit = self.pb_fit[best_idx]
         return 1 / self.gb_fit
 
     def pso_sa(self):
@@ -105,8 +106,9 @@ class PSO(fitness):
                         self.fits[i] = new_fit
 
             best_idx = np.argmax(self.pb_fit)
-            self.gb = np.copy(self.pb[best_idx])
-            self.gb_fit = self.pb_fit[best_idx]
+            if self.gb_fit < self.pb_fit[best_idx]:
+                self.gb = np.copy(self.pb[best_idx])
+                self.gb_fit = self.pb_fit[best_idx]
         return 1 / self.gb_fit
 
     def uniform_mutation(self, code):
@@ -152,8 +154,9 @@ class PSO(fitness):
                     self.pb[i] = np.copy(self.pop[i])
                     self.pb_fit[i] = self.fits[i]
             best_idx = np.argmax(self.pb_fit)
-            self.gb = np.copy(self.pb[best_idx])
-            self.gb_fit = self.pb_fit[best_idx]
+            if self.gb_fit < self.pb_fit[best_idx]:
+                self.gb = np.copy(self.pb[best_idx])
+                self.gb_fit = self.pb_fit[best_idx]
         return 1 / self.gb_fit
 
 
@@ -236,8 +239,9 @@ class ABC(fitness):
                     self.employed[i] = np.random.randint(self.low, self.high, size=self.dim)
             # Memorize the best solution achieved so far
             best_idx = np.argmax(self.emp_fits)
-            self.best = np.copy(self.employed[best_idx])
-            self.best_fit = self.emp_fits[best_idx]
+            if self.best_fit < self.emp_fits[best_idx]:
+                self.best = np.copy(self.employed[best_idx])
+                self.best_fit = self.emp_fits[best_idx]
 
         return 1 / self.best_fit
 
@@ -301,8 +305,9 @@ class WOA(fitness):
             for i in range(self.num_pop):
                 self.fits[i] = 1 / self.fn(self.pop[i])
             best_idx = np.argmax(self.fits)
-            self.best = np.copy(self.pop[best_idx])
-            self.best_fit = self.fits[best_idx]
+            if self.best_fit < self.fits[best_idx]:
+                self.best = np.copy(self.pop[best_idx])
+                self.best_fit = self.fits[best_idx]
 
         return 1 / self.best_fit
 
@@ -342,8 +347,9 @@ class WOA(fitness):
             for i in range(self.num_pop):
                 self.fits[i] = 1 / self.fn(self.pop[i])
             best_idx = np.argmax(self.fits)
-            self.best = np.copy(self.pop[best_idx])
-            self.best_fit = self.fits[best_idx]
+            if self.best_fit < self.fits[best_idx]:
+                self.best = np.copy(self.pop[best_idx])
+                self.best_fit = self.fits[best_idx]
 
         return 1 / self.best_fit
 
@@ -363,6 +369,7 @@ class GWO(fitness):
         # 3 for alpha, beta, and delta wolf
         self.best = None
         self.best_fit = None
+        self.gb_fit = None
 
     # Seyedali Mirjalili, Seyed Mohammad Mirjalili and Andrew Lewis,
     # Grey Wolf Optimizer,
@@ -378,6 +385,7 @@ class GWO(fitness):
         best_idx = np.argmax(self.fits)
         self.best[0] = np.copy(self.pop[best_idx])
         self.best_fit[0] = self.fits[best_idx]
+        self.gb_fit = self.best_fit[0]
         # beta
         self.fits[best_idx] = 0
         best_idx = np.argmax(self.fits)
@@ -420,8 +428,10 @@ class GWO(fitness):
             best_idx = np.argmax(self.fits)
             self.best[2] = np.copy(self.pop[best_idx])
             self.best_fit[2] = self.fits[best_idx]
+            if self.gb_fit < self.best_fit[0]:
+                self.gb_fit = self.best_fit[0]
 
-        return 1 / self.best_fit[0]
+        return 1 / self.gb_fit
 
 
 # HEIDARI A A, MIRJALILI S, FARIS H, et al.
@@ -502,6 +512,7 @@ class HHO(fitness):
             for i in range(self.num_pop):
                 self.fits[i] = 1 / self.fn(self.pop[i])
             best_idx = np.argmax(self.fits)
-            self.best = np.copy(self.pop[best_idx])
-            self.best_fit = self.fits[best_idx]
+            if self.best_fit < self.fits[best_idx]:
+                self.best = np.copy(self.pop[best_idx])
+                self.best_fit = self.fits[best_idx]
         return 1 / self.best_fit
