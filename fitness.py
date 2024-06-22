@@ -1,6 +1,7 @@
 import numpy as np
 from math import sqrt
 
+
 class fitness:
     def __init__(self, srv_rate, req_rate, cloud_delay=0.1):
         self.srv_rate = srv_rate
@@ -19,6 +20,6 @@ class fitness:
         for i in range(self.num_bs):
             #  1/(mu-lamda) by queue theory
             bs_delay = 1 / (srv_bs[i] - self.req_rate[i])
-            if self.cloud_delay > bs_delay > 0:
+            if self.cloud_delay > bs_delay > 0 or bs_delay < 0:
                 delay[i] = bs_delay
         return sum(delay * self.req_rate) / sum(self.req_rate)
